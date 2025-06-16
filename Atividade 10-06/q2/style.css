@@ -1,0 +1,7 @@
+.oculto {
+display: none;
+}
+#mensagemErroCampo {
+color: red;
+margin-top: 10px;
+}

@@ -1,0 +1,11 @@
+.oculto {
+display: none;
+}
+#alertaErroEngajamento {
+color: red;
+margin-top: 10px;
+}
+#resultadoFinalEngajamento {
+margin-top: 15px;
+font-weight: bold;
+}

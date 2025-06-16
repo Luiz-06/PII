@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Calculadora de Engajamento Social</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <h1>Calculadora de Engajamento</h1>
+        <div>
+        <label for="numInteracoes"
+            >Interações (Curtidas, Comentários, Compartilhamentos):</label
+        >
+        <input type="text" id="numInteracoes" />
+        </div>
+        <div>
+        <label for="numVisualizacoes">Visualizações:</label>
+        <input type="text" id="numVisualizacoes" />
+        </div>
+        <button id="calcularEngajamento">Calcular</button>
+        <div id="alertaErroEngajamento" class="oculto"></div>
+        <div id="resultadoFinalEngajamento"></div>
+
+        <script src="script.js"></script>
+    </body>
+</html>

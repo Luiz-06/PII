@@ -1,0 +1,14 @@
+#imagemDinamica {
+margin-top: 20px;
+border: 1px solid #ccc;
+padding: 10px;
+min-height: 150px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+#imagemDinamica img {
+max-width: 100%;
+height: auto;
+display: block;
+}
