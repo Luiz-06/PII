@@ -125,7 +125,7 @@ async function fetchPlaceholderPost() {
   }
 }
 
-// --- Função Principal: Executa todos os testes em sequência ---
+// --- Função Principal ---
 async function runAllApiTests() {
   console.log("========================================");
   console.log("INICIANDO TESTES DE API");
