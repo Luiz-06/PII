@@ -39,13 +39,13 @@
 */
 
 // ================================================================================
-// CÓDIGO JAVASCRIPT EXECUTÁVEL
+// CÓDIGO 
 // ================================================================================
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 
-// --- PASSO 1: CONFIGURAÇÃO DE CHAVES ---
+// --- CONFIGURAÇÃO DE CHAVES ---
 const API_KEYS = {
     openweathermap: 'SUA_CHAVE_DO_OPENWEATHERMAP_AQUI',
     thecatapi: 'SUA_CHAVE_DO_THECATAPI_AQUI'
@@ -58,7 +58,7 @@ async function fetchOpenWeatherMapData() {
     console.log("PULANDO: Chave da OpenWeatherMap não foi configurada.");
     return;
   }
-  const city = "Teresina"; // Vamos usar a sua localização atual!
+  const city = "Teresina"; 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEYS.openweathermap}&units=metric&lang=pt_br`;
 
   try {
@@ -70,7 +70,7 @@ async function fetchOpenWeatherMapData() {
         console.log(`- Temperatura: ${data.main.temp}°C`);
         console.log(`- Condição: ${data.weather[0].description}`);
     } else {
-        // Mostra a mensagem de erro da própria API
+ 
         console.error(`Erro da API: ${data.message}`);
     }
   } catch (error) {
@@ -141,5 +141,4 @@ async function runAllApiTests() {
   console.log("========================================");
 }
 
-// Inicia a execução do script
 runAllApiTests();
