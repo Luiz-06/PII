@@ -70,7 +70,7 @@ async function fetchOpenWeatherMapData() {
         console.log(`- Temperatura: ${data.main.temp}°C`);
         console.log(`- Condição: ${data.weather[0].description}`);
     } else {
- 
+
         console.error(`Erro da API: ${data.message}`);
     }
   } catch (error) {

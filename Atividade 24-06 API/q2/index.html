@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Demonstração de APIs</title>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Showcase de APIs Públicas</h1>
+        </header>
+
+        <section class="api-section">
+            <h2>1. Open Notify (Posição da ISS)</h2>
+            <p>
+                A API Open Notify é um serviço de código aberto que fornece dados sobre a Estação Espacial Internacional (ISS). É uma API pública e gratuita que não requer autenticação, ideal para projetos simples e para quem quer começar a consumir dados de um serviço externo.
+            </p>
+            <p><strong>Demonstração via cURL:</strong></p>
+            <pre><code>curl http://api.open-notify.org/iss-now.json</code></pre>
+        </section>
+
+        <section class="api-section">
+            <h2>2. The Movie Database (TMDb)</h2>
+            <p>
+                A TMDb é uma das maiores e mais populares fontes de dados sobre filmes e séries. Seu uso é gratuito para projetos não comerciais, mas <strong>requer uma chave de API</strong> para autenticar as requisições. Essa chave funciona como um token que identifica sua aplicação.
+            </p>
+            <div class="warning">
+                <strong>Atenção:</strong> Para usar o comando abaixo, obtenha sua chave gratuita no site da TMDb e substitua o texto <code>SUA_CHAVE_API_AQUI</code>. Nunca publique sua chave em repositórios públicos!
+            </div>
+            <p><strong>Demonstração via cURL:</strong></p>
+            <pre><code>curl "https://api.themoviedb.org/3/movie/550?api_key=SUA_CHAVE_API_AQUI&amp;language=pt-BR"</code></pre>
+        </section>
+
+        <section class="api-section">
+            <h2>3. Universities List</h2>
+            <p>
+                Esta é uma API pública e gratuita que fornece uma lista de universidades de diversos países. É uma ferramenta útil para projetos educacionais ou para aplicações que precisam de dados sobre instituições de ensino superior. A busca pode ser filtrada por país.
+            </p>
+            <p><strong>Demonstração via cURL:</strong></p>
+            <pre><code>curl "http://universities.hipolabs.com/search?country=Brazil"</code></pre>
+        </section>
+
+        <section class="api-section">
+            <h2>4. QR Code Generator</h2>
+            <p>
+                Uma API extremamente simples e direta para gerar QR Codes. Ela não requer autenticação e funciona através de uma requisição GET. Os parâmetros para a geração do QR Code são passados diretamente na URL e a API retorna a imagem correspondente.
+            </p>
+            <p><strong>Demonstração via cURL:</strong></p>
+            <pre><code>curl "https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=GitHub-Pages" --output qrcode.png</code></pre>
+            <p>
+                Este comando não retorna texto no terminal, mas cria um arquivo de imagem chamado <code>qrcode.png</code> no seu diretório.
+            </p>
+        </section>
+
+        <footer>
+            <p>Página de demonstração criada em 27 de junho de 2025.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
