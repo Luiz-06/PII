@@ -1,6 +1,4 @@
-# Atividade 24-06 API
-
-Dom 3
+# Dom 3 24-06
 
 ## Participantes
 
