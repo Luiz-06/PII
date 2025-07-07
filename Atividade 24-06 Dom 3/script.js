@@ -1,224 +1,156 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const inputDescricao = document.getElementById("descricaoTarefa");
+    const selectPrioridade = document.getElementById("prioridadeTarefa");
+    const botaoAdicionar = document.getElementById("adicionarBtn");
+    const corpoTabela = document.querySelector("#tabelaTarefas tbody");
 
-const descricaoInput = document.getElementById("descricaoTarefa");
-const prioridadeSelect = document.getElementById("prioridadeTarefa");
-const adicionarBtn = document.getElementById("adicionarBtn");
-const tabelaBody = document.querySelector("#tabelaTarefas tbody");
+    let tarefas = [];
+    let contadorId = 1;
 
-let tarefas = [];
-let idCounter = 1;
+    function renderizarTabela() {
+        corpoTabela.innerHTML = "";
 
-function renderizarTabela() {
-    tabelaBody.innerHTML = ""; 
-
-    if (tarefas.length === 0) {
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = 5;
-        td.textContent = "Nenhuma tarefa cadastrada.";
-        td.style.textAlign = "center";
-        tr.appendChild(td);
-        tabelaBody.appendChild(tr);
-        return;
-    }
-
-    tarefas.forEach((tarefa) => {
-        const tr = document.createElement("tr");
-
-        if (tarefa.dataConclusao) {
-        tr.classList.add("tarefa-concluida");
-        }
-        tr.classList.add(`prioridade-${tarefa.prioridade}`);
-
-        const tdId = document.createElement("td");
-        tdId.textContent = tarefa.id;
-        tr.appendChild(tdId);
-
-        const tdDescricao = document.createElement("td");
-        tdDescricao.textContent = tarefa.descricao;
-        tr.appendChild(tdDescricao);
-
-        const tdDataInicio = document.createElement("td");
-        tdDataInicio.textContent = formatarData(tarefa.dataInicio);
-        tr.appendChild(tdDataInicio);
-
-        const tdDataConclusao = document.createElement("td");
-        tdDataConclusao.textContent = tarefa.dataConclusao
-        ? formatarData(tarefa.dataConclusao)
-        : "Pendente";
-        tr.appendChild(tdDataConclusao);
-
-        const tdAcoes = document.createElement("td");
-
-        if (tarefa.dataConclusao) {
-            const reabrirBtn = document.createElement("button");
-            reabrirBtn.textContent = "Reabrir";
-            reabrirBtn.className = "action-button reabrirBtn";
-            reabrirBtn.onclick = () => reabrirTarefa(tarefa.id);
-            tdAcoes.appendChild(reabrirBtn);
-        } else {
-            const concluirBtn = document.createElement("button");
-            concluirBtn.textContent = "Concluir";
-            concluirBtn.className = "action-button concluirBtn";
-            concluirBtn.onclick = () => concluirTarefa(tarefa.id);
-            tdAcoes.appendChild(concluirBtn);
+        if (tarefas.length === 0) {
+            corpoTabela.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align: center;">Nenhuma tarefa cadastrada.</td>
+                </tr>
+            `;
+            return;
         }
 
-        const editarBtn = document.createElement("button");
-        editarBtn.textContent = "Editar";
-        editarBtn.className = "action-button editarBtn";
-        editarBtn.disabled = !!tarefa.dataConclusao; 
-        editarBtn.onclick = () => editarTarefa(tarefa.id);
-        tdAcoes.appendChild(editarBtn);
+        tarefas.forEach(tarefa => {
+            const classesLinha = `
+                ${tarefa.dataConclusao ? 'tarefa-concluida' : ''}
+                prioridade-${tarefa.prioridade}
+            `;
+            
+            const textoDataConclusao = tarefa.dataConclusao
+                ? formatarData(tarefa.dataConclusao)
+                : "Pendente";
 
-        const excluirBtn = document.createElement("button");
-        excluirBtn.textContent = "Excluir";
-        excluirBtn.className = "action-button excluirBtn";
-        excluirBtn.disabled = !!tarefa.dataConclusao;
-        excluirBtn.onclick = () => excluirTarefa(tarefa.id);
-        tdAcoes.appendChild(excluirBtn);
+            const htmlBotaoAcao = tarefa.dataConclusao
+                ? `<button class="action-button reabrirBtn" onclick="reabrirTarefa(${tarefa.id})">Reabrir</button>`
+                : `<button class="action-button concluirBtn" onclick="concluirTarefa(${tarefa.id})">Concluir</button>`;
 
-        tr.appendChild(tdAcoes);
-        tabelaBody.appendChild(tr);
-    });
+            const htmlLinha = `
+                <tr class="${classesLinha}">
+                    <td>${tarefa.id}</td>
+                    <td>${tarefa.descricao}</td>
+                    <td>${formatarData(tarefa.dataInicio)}</td>
+                    <td>${textoDataConclusao}</td>
+                    <td class="acoes">
+                        ${htmlBotaoAcao}
+                        <button class="action-button editarBtn" onclick="editarTarefa(${tarefa.id})" ${tarefa.dataConclusao ? 'disabled' : ''}>Editar</button>
+                        <button class="action-button excluirBtn" onclick="excluirTarefa(${tarefa.id})" ${tarefa.dataConclusao ? 'disabled' : ''}>Excluir</button>
+                    </td>
+                </tr>
+            `;
+
+            corpoTabela.innerHTML += htmlLinha;
+        });
     }
 
     function adicionarTarefa() {
-    const descricao = descricaoInput.value.trim();
-    const prioridade = prioridadeSelect.value;
+        const descricao = inputDescricao.value.trim();
+        const prioridade = selectPrioridade.value;
 
-    if (!descricao) {
-        alert("Por favor, insira a descrição da tarefa.");
-        return;
-    }
+        if (descricao === "") {
+            alert("Por favor, insira a descrição da tarefa.");
+            return;
+        }
 
-    const novaTarefa = {
-        id: idCounter++,
-        descricao: descricao,
-        dataInicio: new Date(),
-        dataConclusao: null,
-        prioridade: prioridade,
-    };
+        const novaTarefa = {
+            id: contadorId++,
+            descricao: descricao,
+            dataInicio: new Date(),
+            dataConclusao: null,
+            prioridade: prioridade,
+        };
 
-    tarefas.push(novaTarefa);
+        tarefas.push(novaTarefa);
 
-    descricaoInput.value = ""; 
-    salvarNoLocalStorage();
-    renderizarTabela();
-}
-
-/**
- * Marca uma tarefa como concluída.
- * @param {number} id - O ID da tarefa a ser concluída.
- */
-
-function concluirTarefa(id) {
-    const tarefa = tarefas.find((t) => t.id === id);
-    if (tarefa) {
-        tarefa.dataConclusao = new Date();
+        inputDescricao.value = "";
         salvarNoLocalStorage();
         renderizarTabela();
     }
-}
-
-/**
- * Reabre uma tarefa que estava concluída.
- * @param {number} id - O ID da tarefa a ser reaberta.
- */
-function reabrirTarefa(id) {
-    const tarefa = tarefas.find((t) => t.id === id);
-    if (tarefa) {
-        tarefa.dataConclusao = null;
-        salvarNoLocalStorage();
-        renderizarTabela();
-    }
-}
-
-/**
- * Edita a descrição de uma tarefa existente.
- * @param {number} id - O ID da tarefa a ser editada.
- */
-function editarTarefa(id) {
-    const tarefa = tarefas.find((t) => t.id === id);
-    if (tarefa) {
-        const novaDescricao = prompt(
-        "Digite a nova descrição da tarefa:",
-        tarefa.descricao
-        );
-        if (novaDescricao && novaDescricao.trim() !== "") {
-        tarefa.descricao = novaDescricao.trim();
-        salvarNoLocalStorage();
-        renderizarTabela();
+    
+    window.concluirTarefa = function(id) {
+        const tarefa = tarefas.find(t => t.id === id);
+        if (tarefa) {
+            tarefa.dataConclusao = new Date();
+            salvarNoLocalStorage();
+            renderizarTabela();
         }
     }
-}
 
-/**
- * Exclui uma tarefa do array.
- * @param {number} id - O ID da tarefa a ser excluída.
- */
-function excluirTarefa(id) {
-    const confirmou = confirm("Tem certeza que deseja excluir esta tarefa?");
-    if (confirmou) {
-        const tarefa = tarefas.find((t) => t.id === id);
+    window.reabrirTarefa = function(id) {
+        const tarefa = tarefas.find(t => t.id === id);
+        if (tarefa) {
+            tarefa.dataConclusao = null;
+            salvarNoLocalStorage();
+            renderizarTabela();
+        }
+    }
+
+    window.editarTarefa = function(id) {
+        const tarefa = tarefas.find(t => t.id === id);
+        if (tarefa) {
+            const novaDescricao = prompt("Digite a nova descrição da tarefa:", tarefa.descricao);
+
+            if (novaDescricao && novaDescricao.trim() !== "") {
+                tarefa.descricao = novaDescricao.trim();
+                salvarNoLocalStorage();
+                renderizarTabela();
+            }
+        }
+    }
+
+    window.excluirTarefa = function(id) {
+        const tarefa = tarefas.find(t => t.id === id);
+
         if (tarefa && tarefa.dataConclusao) {
-        alert("Não é permitido excluir tarefas finalizadas.");
-        return;
+            alert("Não é permitido excluir tarefas finalizadas.");
+            return;
         }
 
-        tarefas = tarefas.filter((t) => t.id !== id);
-        salvarNoLocalStorage();
-        renderizarTabela();
-    }
-}
-
-/**
- * Formata um objeto Date para o formato "dd/mm/aaaa hh:mm:ss".
- * @param {Date} data - O objeto Date a ser formatado.
- */
-function formatarData(data) {
-    if (!(data instanceof Date)) {
-        data = new Date(data);
-    }
-    const options = {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    };
-    return new Intl.DateTimeFormat("pt-BR", options).format(data);
-}
-
-/**
- * Salva o array de tarefas no Local Storage do navegador.
- */
-function salvarNoLocalStorage() {
-    localStorage.setItem("tarefas_app", JSON.stringify(tarefas));
-}
-
-/**
- * Carrega as tarefas salvas do Local Storage.
- */
-function carregarDoLocalStorage() {
-    const tarefasSalvas = localStorage.getItem("tarefas_app");
-    if (tarefasSalvas) {
-        tarefas = JSON.parse(tarefasSalvas);
-        if (tarefas.length > 0) {
-        idCounter = Math.max(...tarefas.map((t) => t.id)) + 1;
+        const confirmacao = confirm("Tem certeza que deseja excluir esta tarefa?");
+        if (confirmacao) {
+            tarefas = tarefas.filter(t => t.id !== id);
+            salvarNoLocalStorage();
+            renderizarTabela();
         }
     }
-}
-
-adicionarBtn.addEventListener("click", adicionarTarefa);
-
-descricaoInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-        adicionarTarefa();
+    
+    function formatarData(data) {
+        if (!(data instanceof Date)) {
+            data = new Date(data);
+        }
+        return data.toLocaleString('pt-BR');
     }
-});
 
-carregarDoLocalStorage(); 
-renderizarTabela(); 
+    function salvarNoLocalStorage() {
+        localStorage.setItem("tarefas_app", JSON.stringify(tarefas));
+    }
+
+    function carregarDoLocalStorage() {
+        const dadosSalvos = localStorage.getItem("tarefas_app");
+        if (dadosSalvos) {
+            tarefas = JSON.parse(dadosSalvos);
+            if (tarefas.length > 0) {
+                contadorId = Math.max(...tarefas.map(t => t.id)) + 1;
+            }
+        }
+    }
+
+    botaoAdicionar.addEventListener("click", adicionarTarefa);
+
+    inputDescricao.addEventListener("keypress", (evento) => {
+        if (evento.key === "Enter") {
+            adicionarTarefa();
+        }
+    });
+
+    carregarDoLocalStorage();
+    renderizarTabela();
 });
