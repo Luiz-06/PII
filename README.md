@@ -2,6 +2,6 @@
 
 ## Participantes
 
-* Alanda Abamly
+* Alanda Amábily
 * Pedro Victor Venancio
 * Luiz Felipe
