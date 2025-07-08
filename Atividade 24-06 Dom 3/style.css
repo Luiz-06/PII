@@ -1,50 +1,89 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #1a1a1d;
+    color: #e0e0e0;
 }
 
 h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 28px;
+    margin-bottom: 25px;
     text-align: center;
+    color: #48dbfb;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 .container {
     max-width: 900px;
     margin: auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background-color: #2c2c34;
+    padding: 25px;
+    border-radius: 0;
+    border: 1px solid #444;
 }
 
-.form-group {
-    margin-bottom: 10px;
+.add-controls {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    border-bottom: 1px solid #444;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
-input[type="text"] {
-    padding: 10px;
+.add-controls .form-group {
+    flex-grow: 1;
+    margin-bottom: 0;
+}
+
+.add-controls label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #aaa;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 12px;
     font-size: 16px;
-    width: calc(100% - 22px);
     box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background-color: #1a1a1d;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 0;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: #48dbfb;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 16px;
-    background-color: #007BFF;
-    color: white;
+    font-weight: bold;
+    color: #1a1a1d;
+    background-color: #48dbfb;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     cursor: pointer;
-    margin-top: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #a1eeff;
+}
+
+button:disabled {
+    background-color: #555;
+    color: #888;
+    cursor: not-allowed;
 }
 
 table {
@@ -54,86 +93,45 @@ table {
 }
 
 th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
+    padding: 14px;
+    border: 1px solid #444;
     text-align: left;
 }
 
 th {
-    background-color: #f4f4f4;
-}
-
-button.concluirBtn {
-    background-color: #28a745;
-}
-button.concluirBtn:hover {
-    background-color: #218838;
-}
-
-button.excluirBtn {
-    background-color: #FF4136;
-}
-button.excluirBtn:hover {
-    background-color: #dc3545;
+    background-color: #3a3a44;
+    color: #48dbfb;
+    font-weight: 600;
 }
 
 .action-button {
-    padding: 5px 10px;
+    padding: 6px 12px;
     font-size: 14px;
-    color: white;
+    font-weight: bold;
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     cursor: pointer;
     margin-right: 5px;
 }
 
-/* ESTILOS ADICIONAIS PARA MELHORIAS */
+button.concluirBtn { background-color: #4dffb4; color: #1a1a1d; }
+button.concluirBtn:hover { background-color: #8affd1; }
+
+button.excluirBtn { background-color: #e74c3c; }
+button.excluirBtn:hover { background-color: #f18a7e; }
+
+button.reabrirBtn { background-color: #ffc400; color: #1a1a1d; }
+button.reabrirBtn:hover { background-color: #ffd966; }
+
+button.editarBtn { background-color: #3498db; }
+button.editarBtn:hover { background-color: #72bbf0; }
+
 .tarefa-concluida td:nth-child(2) {
     text-decoration: line-through;
-    color: #888;
+    color: #777;
 }
 
-button.reabrirBtn {
-    background-color: #ffc107;
-    color: black;
-}
-button.reabrirBtn:hover {
-    background-color: #e0a800;
-}
-
-button.editarBtn {
-    background-color: #17a2b8;
-}
-button.editarBtn:hover {
-    background-color: #138496;
-}
-
-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-
-.prioridade-baixa { border-left: 5px solid #28a745; }
-.prioridade-media { border-left: 5px solid #ffc107; }
-.prioridade-alta { border-left: 5px solid #dc3545; }
-
-.add-controls {
-    display: flex;
-    gap: 10px;
-    align-items: flex-end;
-}
-.add-controls .form-group {
-    flex-grow: 1;
-    margin-bottom: 0;
-}
-.add-controls label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-.add-controls select {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+.prioridade-baixa { border-left: 4px solid #4dffb4; }
+.prioridade-media { border-left: 4px solid #ffc400; }
+.prioridade-alta { border-left: 4px solid #e74c3c; }
